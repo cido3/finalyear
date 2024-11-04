@@ -1,0 +1,392 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block content %}
+<nav class="nxl-navigation">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+    </div>
+    <div class="navbar-content">
+      <ul class="nxl-navbar">
+        <li class="nxl-item nxl-caption">
+          <label>Navigation</label>
+        </li>
+        <li class="nxl-item nxl-hasmenu">
+          <a href="javascript:void(0);" class="nxl-link">
+            <span class="nxl-micon"><i class="feather-airplay"></i></span>
+            <span class="nxl-mtext">Energy prediction</span
+            ><span class="nxl-arrow"
+              ><i class="feather-chevron-right"></i
+            ></span>
+          </a>
+          <ul class="nxl-submenu">
+            <li class="nxl-item">
+              <a class="nxl-link" href="{% url 'dashboard' %}">Energy prediction</a>
+            </li>
+            <li class="nxl-item">
+              <a class="nxl-link" href="{% url 'analytics' %}">Analytics</a>
+            </li>
+          </ul>
+        </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<!--! ================================================================ !-->
+<!--! [End]  Navigation Manu !-->
+<!--! ================================================================ !-->
+<!--! ================================================================ !-->
+<!--! [Start] Header !-->
+<!--! ================================================================ !-->
+<header class="nxl-header">
+  <div class="header-wrapper">
+    <!--! [Start] Header Left !-->
+    <div class="header-left d-flex align-items-center gap-4">
+      <!--! [Start] nxl-head-mobile-toggler !-->
+      <a
+        href="javascript:void(0);"
+        class="nxl-head-mobile-toggler"
+        id="mobile-collapse"
+      >
+        <div class="hamburger hamburger--arrowturn">
+          <div class="hamburger-box">
+            <div class="hamburger-inner"></div>
+          </div>
+        </div>
+      </a>
+      <!--! [Start] nxl-head-mobile-toggler !-->
+      <!--! [Start] nxl-navigation-toggle !-->
+      <div class="nxl-navigation-toggle">
+        <a href="javascript:void(0);" id="menu-mini-button">
+          <i class="feather-align-left"></i>
+        </a>
+        <a
+          href="javascript:void(0);"
+          id="menu-expend-button"
+          style="display: none"
+        >
+          <i class="feather-arrow-right"></i>
+        </a>
+      </div>
+      <!--! [End] nxl-navigation-toggle !-->
+      <!--! [Start] nxl-lavel-mega-menu-toggle !-->
+      <div class="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
+        <a href="javascript:void(0);" id="nxl-lavel-mega-menu-open">
+          <i class="feather-align-left"></i>
+        </a>
+      </div>
+      <!--! [End] nxl-lavel-mega-menu-toggle !-->
+      <!--! [Start] nxl-lavel-mega-menu !-->
+      <div class="nxl-drp-link nxl-lavel-mega-menu">
+        <div class="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
+          <a href="javascript:void(0)" id="nxl-lavel-mega-menu-hide">
+            <i class="feather-arrow-left me-2"></i>
+            <span>Back</span>
+          </a>
+        </div>
+        <!--! [Start] nxl-lavel-mega-menu-wrapper !-->
+        <!--! [End] nxl-lavel-mega-menu-wrapper !-->
+      </div>
+      <!--! [End] nxl-lavel-mega-menu !-->
+    </div>
+    <!--! [End] Header Left !-->
+    <!--! [Start] Header Right !-->
+    <div class="header-right ms-auto">
+      <div class="d-flex align-items-center">
+        
+        
+        <div class="dropdown nxl-h-item">
+          <a
+            class="nxl-head-link me-3"
+            data-bs-toggle="dropdown"
+            href="#"
+            role="button"
+            data-bs-auto-close="outside"
+          >
+            <i class="feather-bell"></i>
+            <span class="badge bg-danger nxl-h-badge">0</span>
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu"
+          >
+            <div
+              class="d-flex justify-content-between align-items-center notifications-head"
+            >
+              <h6 class="fw-bold text-dark mb-0">Notifications</h6>
+              <a
+                href="javascript:void(0);"
+                class="fs-11 text-success text-end ms-auto"
+                data-bs-toggle="tooltip"
+                title="Make as Read"
+              >
+                <i class="feather-check"></i>
+                <span>Make as Read</span>
+              </a>
+            </div>
+            <div class="notifications-item">
+              <img
+                src="{% static 'images/avatar/2.png' %}"
+                alt=""
+                class="rounded me-3 border"
+              />
+              {% for notification in unread_notifications %}
+          <div class="notifications-item">
+              <img
+                  src="{% static 'images/avatar/notification.png' %}"
+                  alt=""
+                  class="rounded me-3 border"
+              />
+              <div class="notifications-desc">
+                  <a href="javascript:void(0);" class="font-body text-truncate-2-line">
+                      <span class="fw-semibold text-dark">{{ notification.message }}</span>
+                  </a>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div class="notifications-date text-muted border-bottom border-bottom-dashed">
+                          {{ notification.created_at|date:"Y-m-d H:i" }}
+                      </div>
+                      <div class="d-flex align-items-center float-end gap-2">
+                          <a
+                              href="{% url 'mark_notification_as_read' notification.id %}"
+                              class="d-block wd-8 ht-8 rounded-circle bg-gray-300"
+                              data-bs-toggle="tooltip"
+                              title="Mark as Read"
+                          ></a>
+                          <a
+                              href="{% url 'delete_notification' notification.id %}"
+                              class="text-danger"
+                              data-bs-toggle="tooltip"
+                              title="Remove"
+                          >
+                              <i class="feather-x fs-12"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% empty %}
+          <div class="notifications-item">
+              <p class="text-muted">No new notifications.</p>
+          </div>
+          {% endfor %}
+          </div>
+        </div>
+        <div class="dropdown nxl-h-item">
+          <a
+            href="javascript:void(0);"
+            data-bs-toggle="dropdown"
+            role="button"
+            data-bs-auto-close="outside"
+          >
+            <img
+              src="{% static 'images/avatar/1.png' %}"
+              alt="user-image"
+              class="img-fluid user-avtar me-0"
+            />
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown"
+          >
+            <div class="dropdown-header">
+              <div class="d-flex align-items-center">
+                <img
+                  src="{% static 'images/avatar/1.png' %}"
+                  alt="user-image"
+                  class="img-fluid user-avtar"
+                />
+                <div>
+                  <h6 class="text-dark mb-0">{{ user.username }} <!-- Display the user's full name --></h6>
+                  <span class="fs-12 fw-medium text-muted">{{ user.email }}</span> <!-- Display the user's email -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" class="dropdown-item">
+              <i class="feather-user"></i>
+              <span>Profile Details</span>
+            </a>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+              {% csrf_token %}
+            </form>
+            <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();" class="dropdown-item">
+              <i class="feather-log-out"></i>
+              <span>Logout</span>
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--! [End] Header Right !-->
+  </div>
+    <!--! [End] Header Right !-->
+  </div>
+</header>
+
+<main class="nxl-container">
+  <div class="nxl-content"> <!-- Added padding classes here -->
+    <div class="page-header"> <!-- Added margin-bottom -->
+        <div class="page-header-left d-flex align-items-center">
+            <div class="page-header-title">
+                <h5 class="m-b-10">Dashboard</h5> <!-- Changed title to Dashboard -->
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4 px-4">
+      <div class="row pt-4 px-4">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Weather Trends and Forecast</h5>
+              <canvas id="weatherChart"></canvas>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Solar Energy Generation and Prediction</h5>
+              <canvas id="solarChart"></canvas>
+            </div>
+          </div>
+        </div>
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Current Weather</h5>
+            {% if current_weather %}
+              <p>Temperature: <span id="currentTemperature">{{ current_weather.temperature|floatformat:1 }}°C</span></p>
+              <p>Condition: <span id="currentCondition">{{ current_weather.condition }}</span></p>
+              <p>Cloud Cover: <span id="currentCloudCover">{{ current_weather.cloud }}%</span></p>
+              <p>Wind: <span id="currentWind">{{ current_weather.wind_speed }} km/h {{ current_weather.wind_direction }}</span></p>
+              <p>Humidity: <span id="currentHumidity">{{ current_weather.humidity }}%</span></p>
+              <p>UV Index: <span id="currentUV">{{ current_weather.uv }}</span></p>
+            {% else %}
+              <p>Weather data is currently unavailable.</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Predicted Performance</h5>
+            {% if predicted_performance %}
+            <p>Today's Prediction: {{ predicted_performance.today|default:"N/A" }} kWh</p>
+            <p>Tomorrow's Prediction: {{ predicted_performance.tomorrow|default:"N/A" }} kWh</p>
+            
+            {% else %}
+              <p>Prediction data is currently unavailable.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+{% endblock %} {% block extra_js %}
+<script type="text/javascript">
+  // Weather Chart
+  console.log('Chart.js loaded:', Chart);
+
+
+  // Weather Chart
+  // Weather Chart
+const weatherCtx = document.getElementById('weatherChart').getContext('2d');
+new Chart(weatherCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ weather_labels|safe }},  // Date labels
+        datasets: [{
+            label: 'Temperature (°C)',
+            data: {{ weather_temps|safe }},  // Temperature values passed to the chart
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+        }, {
+            label: 'Cloud Cover (%)',
+            data: {{ weather_clouds|safe }},  // Cloud cover values passed to the chart
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Value'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            }
+        }
+    }
+});
+
+  // Solar Generation Chart
+  const solarCtx = document.getElementById('solarChart').getContext('2d');
+  new Chart(solarCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ weather_labels|safe }},
+        datasets: [{
+            label: 'Actual Energy Generated (kWh)',
+            data: {{ actual_solar_energy|safe }},
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+        }, {
+            label: 'Expected Energy Generation (kWh)',
+            data: {{ expected_solar_energy|safe }},
+            backgroundColor: 'rgba(255, 159, 64, 0.6)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Energy (kWh)'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            }
+        }
+    }
+  });
+  // Initialize Feather icons
+  feather.replace();
+
+  // Add date range picker for charts
+  const dateRangePicker = document.getElementById('dateRangePicker');
+  dateRangePicker.addEventListener('change', function() {
+      // Here you would typically make an AJAX call to fetch new data
+      // and update the charts. For now, we'll just log the selected date range.
+      console.log('Selected date range:', this.value);
+  });
+
+  // Add real-time updates (simulated for this example)
+  function updateCurrentWeather() {
+      const temperature = document.getElementById('currentTemperature');
+      const cloudCover = document.getElementById('currentCloudCover');
+
+      // Simulate real-time updates with random data
+      temperature.textContent = (Math.random() * 30 + 10).toFixed(1) + '°C';
+      cloudCover.textContent = Math.floor(Math.random() * 100) + '%';
+  }
+
+  setInterval(updateCurrentWeather, 60000); // Update every minute
+</script>
+{% endblock %}
